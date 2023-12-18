@@ -1,102 +1,30 @@
-
-Skip to main content
-Keyboard shortcuts
-Accessibility feedback
-Drive
-New
-Home
-My Drive
-Computers
-Shared with me
-Recent
-Starred
-Spam
-Trash
-Storage
-Get more storage
-
-
-Jan 21, 2023
-Jul 17, 2022
-Jul 17, 2022
-Jan 24, 2023
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-0-bubble_sort.c
-
-Details
-
-Activity
-Couldn't load details. Try again.
 #include "sort.h"
+#include <stdio.h>
 
 /**
- * swap_ints - Swap two integers in an array.
- * @a: The first integer to swap.
- * @b: The second integer to swap.
- */
-void swap_ints(int *a, int *b)
-{
-	int tmp;
-
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
-}
-
-/**
- * bubble_sort - Sort an array of integers in ascending order.
- * @array: An array of integers to sort.
- * @size: The size of the array.
- *
- * Description: Prints the array after each swap.
+ * bubble_sort - sorts an array in ascending order
+ * @array: array of ints to sort
+ * @size: size of the array
  */
 void bubble_sort(int *array, size_t size)
 {
-	size_t i, len = size;
-	bool bubbly = false;
+	unsigned int i, j;
+	int tmp;
 
-	if (array == NULL || size < 2)
+	if (size < 2)
 		return;
 
-	while (bubbly == false)
+	for (i = 0; i < size; i++)
 	{
-		bubbly = true;
-		for (i = 0; i < len - 1; i++)
+		for (j = 0; j < size - i - 1; j++)
 		{
-			if (array[i] > array[i + 1])
+			if (array[j] > array[j + 1])
 			{
-				swap_ints(array + i, array + i + 1);
+				tmp = array[j];
+				array[j] = array[j + 1];
+				array[j + 1] = tmp;
 				print_array(array, size);
-				bubbly = false;
 			}
 		}
-		len--;
 	}
 }
-
