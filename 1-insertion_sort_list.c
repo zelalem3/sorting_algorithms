@@ -1,102 +1,41 @@
-
-Skip to main content
-Keyboard shortcuts
-Accessibility feedback
-Drive
-New
-Home
-My Drive
-Computers
-Shared with me
-Recent
-Starred
-Spam
-Trash
-Storage
-Get more storage
-
-
-Jan 21, 2023
-Jul 17, 2022
-Jul 17, 2022
-Jan 24, 2023
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-Jul 17, 2022
-1-insertion_sort_list.c
-
-Details
-
-Activity
 #include "sort.h"
-
 /**
- * swap_nodes - Swap two nodes in a listint_t doubly-linked list.
- * @h: A pointer to the head of the doubly-linked list.
- * @n1: A pointer to the first node to swap.
- * @n2: The second node to swap.
+ * insertion_sort_list - function that sorts a doubly linked list
+ *                       of integers in ascending order using the Insertion
+ *                       sort algorithm
+ * @list: doubly linked list
+ * Return: void
  */
-void swap_nodes(listint_t **h, listint_t **n1, listint_t *n2)
-{
-	(*n1)->next = n2->next;
-	if (n2->next != NULL)
-		n2->next->prev = *n1;
-	n2->prev = (*n1)->prev;
-	n2->next = *n1;
-	if ((*n1)->prev != NULL)
-		(*n1)->prev->next = n2;
-	else
-		*h = n2;
-	(*n1)->prev = n2;
-	*n1 = n2->prev;
-}
 
-/**
- * insertion_sort_list - Sorts a doubly linked list of integers
- *                       using the insertion sort algorithm.
- * @list: A pointer to the head of a doubly-linked list of integers.
- *
- * Description: Prints the list after each swap.
- */
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *iter, *insert, *tmp;
+	listint_t *node = NULL, *tmp = NULL;
 
 	if (list == NULL || *list == NULL || (*list)->next == NULL)
 		return;
 
-	for (iter = (*list)->next; iter != NULL; iter = tmp)
+	node = *list;
+	node = node->next;
+	while (node)
 	{
-		tmp = iter->next;
-		insert = iter->prev;
-		while (insert != NULL && iter->n < insert->n)
+		while (node->prev && node->n < (node->prev)->n)
 		{
-			swap_nodes(list, &insert, iter);
-			print_list((const listint_t *)*list);
+			tmp = node;
+			if (node->next)
+				(node->next)->prev = tmp->prev;
+			(node->prev)->next = tmp->next;
+			node = node->prev;
+			tmp->prev = node->prev;
+			tmp->next = node;
+			if (node->prev)
+				(node->prev)->next = tmp;
+			node->prev = tmp;
+			if (tmp->prev == NULL)
+				*list = tmp;
+			print_list(*list);
+			node = node->prev;
 		}
+		node = node->next;
 	}
-} 
+
+}
